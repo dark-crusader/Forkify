@@ -132,8 +132,6 @@ elements.list.addEventListener('click', e => {
 /**
  * Likes Controller
  */
-if (!state.likes) state.likes = new Likes();
-likesView.toggleLikesMenu(state.likes.getNumLikes());
 const controlLike = () => {
     if (!state.likes) state.likes = new Likes();
     const recID = state.recipe.id;
@@ -163,6 +161,17 @@ const controlLike = () => {
     likesView.toggleLikesMenu(state.likes.getNumLikes());
 };
 
+// On Page Load
+window.addEventListener('load', () => {
+    // Create likes object
+    state.likes = new Likes();
+    // Restore likes from localStorage
+    state.likes.readStorage();
+    // Show menu button if likes exist
+    likesView.toggleLikesMenu(state.likes.getNumLikes());
+    // Render existing likes
+    state.likes.likes.forEach(like => likesView.renderLike(like));
+});
 
 // Event handlers for buttons
 elements.recipe.addEventListener('click', e => {
