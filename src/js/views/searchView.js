@@ -16,11 +16,11 @@ export const highlightSelected = id => {
     if (selected) {
         selected.classList.remove('results__link--active');
     }
-    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+    document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active');
 };
 
 // Function to limit length of recipe titles
-const limitTitle = (title, limit = 17) => {
+export const limitTitle = (title, limit = 17) => {
     if (title.length > limit) {
         let newTitle = '';
         title.split(' ').reduce((acc, curr) => {
