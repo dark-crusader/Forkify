@@ -2,9 +2,11 @@
 
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import List from './models/List';
 import {elements, renderLoader, clearLoader} from './views/base';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as listView from './views/listView';
 
 /** Stores current state of the app
  * Search object
@@ -91,7 +93,38 @@ const controlRecipe = async () => {
 
 ['hashchange', 'load'].forEach(event => {window.addEventListener(event, controlRecipe)});
 
-// Event handlers for buttons to change serving size
+/** 
+ * List Controller
+ */
+const controlList = () => {
+    // Create a new list IF there in none yet
+    if (!state.list) state.list = new List();
+
+    // Add each ingredient to the list and UI
+    state.recipe.ingredients.forEach(el => {
+        const item = state.list.addItem(el.count, el.unit, el.ingredient);
+        listView.renderItem(item);
+    });
+}
+
+// Handle delete and update list items
+elements.list.addEventListener('click', e => {
+    const ID = e.target.closest('.shopping__item').dataset.itemid;
+    // Handle if delete button clicked
+    if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+        // Delete from list
+        state.list.deleteItem(ID);
+        // Delete from UI
+        listView.deleteItem(ID);        
+    } else if (e.target.matches('.shopping__count-value')) {
+        // Handles count update
+        const val = parseFloat(e.target.value);
+        state.list.updateCount(ID, val);
+    }
+
+});
+
+// Event handlers for buttons
 elements.recipe.addEventListener('click', e => {
     if (event.target.matches('.btn-dec, .btn-dec *')) {
         // Decrease button clicked
@@ -103,6 +136,8 @@ elements.recipe.addEventListener('click', e => {
         // Increase button clicked
         state.recipe.updateServings('inc');
         recipeView.updateServings(state.recipe);
+    } else if (e.target.matches('.recipe__btn-add, .recipe__btn-add *')) {
+        controlList();
     }
     
 });
