@@ -90,3 +90,19 @@ const controlRecipe = async () => {
 };
 
 ['hashchange', 'load'].forEach(event => {window.addEventListener(event, controlRecipe)});
+
+// Event handlers for buttons to change serving size
+elements.recipe.addEventListener('click', e => {
+    if (event.target.matches('.btn-dec, .btn-dec *')) {
+        // Decrease button clicked
+        if (state.recipe.servings > 1) {
+            state.recipe.updateServings('dec');
+            recipeView.updateServings(state.recipe);
+        }
+    } else if (event.target.matches('.btn-inc, .btn-inc *')) {
+        // Increase button clicked
+        state.recipe.updateServings('inc');
+        recipeView.updateServings(state.recipe);
+    }
+    
+});

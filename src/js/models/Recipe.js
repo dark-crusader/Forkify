@@ -96,4 +96,15 @@ export default class Recipe {
         });
         this.ingredients = newIngredients;
     }
+
+    // Method to update ingredients based on servings selected
+    updateServings(type = 'inc') {
+        // Update servings based on type of operation
+        const oldServings = this.servings;
+        type === 'inc' ? ++this.servings : --this.servings;
+        // Update ingredients based on servings
+        this.ingredients.forEach(ele => {
+            ele.count *= (this.servings / oldServings);
+        });
+    }
 }
