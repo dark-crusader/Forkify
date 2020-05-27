@@ -4,6 +4,7 @@ import Search from './models/Search';
 import Recipe from './models/Recipe';
 import {elements, renderLoader, clearLoader} from './views/base';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 
 /** Stores current state of the app
  * Search object
@@ -69,13 +70,18 @@ const controlRecipe = async () => {
     if (ID) {
         // TODOS:
         // Change UI
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
+        if (state.search)
+            searchView.highlightSelected(ID);
         // Create recipe Object
         state.recipe = new Recipe(ID);
         try {
             // Instantiate recipe Object
             await state.recipe.getRecipe();
             // Render recipe
-            console.log(state.recipe);
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
         } catch (err) {
             alert('Sorry, We couldn\'t fetch that recipe...');
         }

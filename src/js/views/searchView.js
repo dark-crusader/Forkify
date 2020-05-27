@@ -10,6 +10,14 @@ export const clearResults = () => {
     elements.searchResList.innerHTML = '';
     elements.searchResPages.innerHTML = '';
 };
+// Function to highlight selected recipe
+export const highlightSelected = id => {
+    let selected = document.querySelector('.results__link--active');
+    if (selected) {
+        selected.classList.remove('results__link--active');
+    }
+    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+};
 
 // Function to limit length of recipe titles
 const limitTitle = (title, limit = 17) => {

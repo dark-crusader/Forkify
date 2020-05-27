@@ -25,12 +25,14 @@ export default class Recipe {
         // Assuming 15 min. taken for every 3 ingredients
         const totalIngre = this.ingredients.length;
         const duration = Math.ceil(totalIngre / 3);
-        this.time = duration * 3;
+        this.time = duration * 15;
     }
 
     calcServings() {
-        // Assuming 15 min. taken for each serving
+        // Assuming 10 min. taken for each serving
         this.servings = Math.floor(this.time / 15);
+        // Atleast one serving
+        this.servings > 1 ? this.servings : 1;
     }
 
     // Function to parse all Ingredients to uniform units
@@ -66,6 +68,7 @@ export default class Recipe {
                 } else {
                     count = eval(arrIng.slice(0, unitIndex).join('+'));
                 }
+                count = parseFloat(count.toFixed(2));
 
                 objIng = {
                     count,
