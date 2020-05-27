@@ -11,6 +11,7 @@ export const clearResults = () => {
     elements.searchResPages.innerHTML = '';
 };
 
+// Function to limit length of recipe titles
 const limitTitle = (title, limit = 17) => {
     if (title.length > limit) {
         let newTitle = '';
@@ -50,21 +51,6 @@ const makeButton = (page, type) => `
         </svg>
     </button>
 `;
-
-    // <!--
-    // <button class="btn-inline results__btn--prev">
-    //     <svg class="search__icon">
-    //         <use href="img/icons.svg#icon-triangle-left"></use>
-    //     </svg>
-    //     <span>Page 1</span>
-    // </button>
-    // <button class="btn-inline results__btn--next">
-    //     <span>Page 3</span>
-    //     <svg class="search__icon">
-    //         <use href="img/icons.svg#icon-triangle-right"></use>
-    //     </svg>
-    // </button>
-    // --> 
 
 const renderButtons = (page, numRes, resPerPage) => {
     const pages = Math.ceil(numRes / resPerPage);
